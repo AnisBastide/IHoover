@@ -24,5 +24,28 @@ public class Main {
         System.out.println(hoover.direction);
         System.out.println(hoover.roomXSize);
         System.out.println(hoover.roomYSize);
+
+        System.out.println("What are your instructions? (D,G,A)");
+        String instructions = reader.readLine();
+
+        for (int i = 0; i < instructions.length(); i++) {
+            char letter = instructions.charAt(i);
+            if(letter == 'A'){
+                hoover.forward();
+            } else if (letter == 'G')
+            {
+            hoover.rotate(RotationDirection.G);
+            }
+            else if (letter == 'D')
+            {
+                hoover.rotate(RotationDirection.D);
+            }
+        }
+
+        System.out.println(hoover.positionX);
+        System.out.println(hoover.positionY);
+        System.out.println(hoover.direction);
+        System.out.println(hoover.roomXSize);
+        System.out.println(hoover.roomYSize);
     }
 }
