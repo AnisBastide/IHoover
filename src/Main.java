@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
 
@@ -18,11 +19,10 @@ public class Main {
         System.out.println("What is the position y of the hoover?");
         String hooverYString = reader.readLine();
         boolean isPositionsInt = false;
-        while(!isPositionsInt){
-            if(checkIsInt(new String[]{roomXString, roomYString, hooverXString, hooverYString})){
+        while (!isPositionsInt) {
+            if (checkIsInt(new String[]{roomXString, roomYString, hooverXString, hooverYString})) {
                 isPositionsInt = true;
-            }
-            else{
+            } else {
                 System.out.println("One of the value was not a number, try again please.");
                 System.out.println("Hello, what is the x length of the room?");
                 roomXString = reader.readLine();
@@ -40,9 +40,21 @@ public class Main {
         int roomX = Integer.parseInt(roomXString);
         int roomY = Integer.parseInt(roomYString);
         System.out.println("What is the direction of the hoover? (N,E,W,S)");
-        Direction hooverDirection = Direction.valueOf(reader.readLine());
+        String hooverDirectionString = reader.readLine();
+        boolean isDirectionOk = false;
+        while (!isDirectionOk) {
+            if (Objects.equals(hooverDirectionString, "N") || Objects.equals(hooverDirectionString, "S") || Objects.equals(hooverDirectionString, "W") || Objects.equals(hooverDirectionString, "E")) {
+                isDirectionOk = true;
+            }
+            else{
+                System.out.println("The direction you provided is not in the 4 possibilities");
+                System.out.println("What is the direction of the hoover? (N,E,W,S)");
+                hooverDirectionString = reader.readLine();
+            }
+        }
+        Direction hooverDirection = Direction.valueOf(hooverDirectionString);
 
-        Hoover hoover = new Hoover(hooverX,hooverY,hooverDirection,roomY,roomX);
+        Hoover hoover = new Hoover(hooverX, hooverY, hooverDirection, roomY, roomX);
         System.out.println(hoover.positionX);
         System.out.println(hoover.positionY);
         System.out.println(hoover.direction);
@@ -54,14 +66,11 @@ public class Main {
 
         for (int i = 0; i < instructions.length(); i++) {
             char letter = instructions.charAt(i);
-            if(letter == 'A'){
+            if (letter == 'A') {
                 hoover.forward();
-            } else if (letter == 'G')
-            {
-            hoover.rotate(RotationDirection.G);
-            }
-            else if (letter == 'D')
-            {
+            } else if (letter == 'G') {
+                hoover.rotate(RotationDirection.G);
+            } else if (letter == 'D') {
                 hoover.rotate(RotationDirection.D);
             }
         }
@@ -73,9 +82,9 @@ public class Main {
         System.out.println(hoover.roomYSize);
     }
 
-    public static boolean checkIsInt(String[] userInputs){
-        try{
-            for (String userInput:userInputs) {
+    public static boolean checkIsInt(String[] userInputs) {
+        try {
+            for (String userInput : userInputs) {
                 parseInt(userInput);
             }
             return true;
