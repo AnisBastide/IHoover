@@ -2,19 +2,43 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static java.lang.Integer.parseInt;
+
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         System.out.println("Hello, what is the x length of the room?");
-        int roomX = Integer.parseInt(reader.readLine());
+        String roomXString = reader.readLine();
         System.out.println("What is the y length of the room?");
-        int roomY = Integer.parseInt(reader.readLine());
+        String roomYString = reader.readLine();
 
         System.out.println("What is the position x of the hoover?");
-        int hooverX = Integer.parseInt(reader.readLine());
+        String hooverXString = reader.readLine();
         System.out.println("What is the position y of the hoover?");
-        int hooverY = Integer.parseInt(reader.readLine());
+        String hooverYString = reader.readLine();
+        boolean isPositionsInt = false;
+        while(!isPositionsInt){
+            if(checkIsInt(new String[]{roomXString, roomYString, hooverXString, hooverYString})){
+                isPositionsInt = true;
+            }
+            else{
+                System.out.println("One of the value was not a number, try again please.");
+                System.out.println("Hello, what is the x length of the room?");
+                roomXString = reader.readLine();
+                System.out.println("What is the y length of the room?");
+                roomYString = reader.readLine();
+
+                System.out.println("What is the position x of the hoover?");
+                hooverXString = reader.readLine();
+                System.out.println("What is the position y of the hoover?");
+                hooverYString = reader.readLine();
+            }
+        }
+        int hooverX = Integer.parseInt(hooverXString);
+        int hooverY = Integer.parseInt(hooverYString);
+        int roomX = Integer.parseInt(roomXString);
+        int roomY = Integer.parseInt(roomYString);
         System.out.println("What is the direction of the hoover? (N,E,W,S)");
         Direction hooverDirection = Direction.valueOf(reader.readLine());
 
@@ -47,5 +71,16 @@ public class Main {
         System.out.println(hoover.direction);
         System.out.println(hoover.roomXSize);
         System.out.println(hoover.roomYSize);
+    }
+
+    public static boolean checkIsInt(String[] userInputs){
+        try{
+            for (String userInput:userInputs) {
+                parseInt(userInput);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
